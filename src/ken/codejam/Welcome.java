@@ -41,6 +41,8 @@ public class Welcome extends FirstLineNumOfTCProblem {
 			return 0;
 		}
 		
+		
+		
 		@Override
 		public void process(int order, BufferedWriter output) {
 			count = 0;
