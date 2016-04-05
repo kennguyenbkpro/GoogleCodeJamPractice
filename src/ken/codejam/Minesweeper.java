@@ -2,6 +2,7 @@ package ken.codejam;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import ken.codejam.utils.AutoParseInputProblem;
@@ -79,11 +80,139 @@ public class Minesweeper extends AutoParseInputProblem{
 		}
 		@Override
 		public void process(int order, BufferedWriter output) {
-			print(order, output, "" + R + C + M);
+			
+			int[][] result = new int[R][C];
+			for (int i = 0; i < R; i ++){
+				for (int j = 0; j < C; j ++){
+					result[i][j] = 1;//no bomb 
+				}
+			}
+			result[R-1][C-1] = 0;//start
+			
+			if (M == 0){
+				printResult(order, output, result);
+				return;
+			}
+			
+			int S = R > C ? C : R;
+//			int L = R > C ? R : C;
+			if (S == 1 || R * C - M == 1){
+				for (int i = 0; i < R; i ++){
+					for (int j = 0; j < C; j ++){
+						result[i][j] = 2;//bomb
+						M--;
+						if (M == 0){
+							printResult(order, output, result);
+							return;
+						}
+					}
+				}
+				printResult(order, output, result);
+				return;
+			}
+			
+			for (int i = 0; i < R - 2; i ++){
+				for (int j = 0; j < C - 2; j ++){
+					if (M == 0) break;
+					result[i][j] = 2;//bomb
+					M--;
+				}
+			}
+			int i = 0;
+			int j = 0;
+			for (int k = 0; k < 2; k ++){
+				for (; i < R - 3 + k; i ++){
+					if (M < 2) break;
+					result[i][C - 2] = 2;
+					result[i][C - 1] = 2;
+					M -= 2;
+				}
+				for (; j < C - 3 + k; j ++){
+					if (M < 2) break;
+					result[R-2][j] = 2;
+					result[R-1][j] = 2;
+					M -= 2;
+				}
+			}
+			if (M == 1){
+				if (i < R - 3 && j < C - 2){
+					result[i][C - 2] = 2;
+					result[i][C - 1] = 2;
+					result[R-3][C-3] = 1;
+					M --;
+				} else if (i < R - 2 && j < C - 3){
+					result[R-2][j] = 2;
+					result[R-1][j] = 2;
+					result[R-3][C-3] = 1;
+					M --;
+				}
+			} 
+			
+			if (M == 0){
+				printResult(order, output, result);
+			} else {
+				printImpossible(order, output);
+//				printResult(order, output, result);
+			}
+			
+		}
+		
+		boolean markBombTo(int[][] result, int i, int j){
+			if (M == 0){
+				return true;
+			}
+			if (result[i][j] == 2) return true;
+			
+			
+			
+			result[i][j] = 2;//bomb
+			M --;
+			if (markBombTo(result, i + 1, j) && markBombTo(result, i, j + 1)){
+				if (M == 0){
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		void printImpossible(int order, BufferedWriter output){
+			print(order, output, "\nImpossible");
+		}
+		
+		void printResult(int order, BufferedWriter output, int[][] result){
+			StringBuilder builder = new StringBuilder();
+//			builder.append(M);
+			for (int i = 0; i < R; i ++){
+				builder.append("\n");
+				for (int j = 0; j < C; j ++){
+					switch (result[i][j]) {
+					case 0:
+						builder.append('c');
+						break;
+					case 1:
+						builder.append('.');
+						break;
+					case 2:
+						builder.append('*');
+						break;
+					default:
+						break;
+					}
+				}
+			}
+			print(order, output, builder.toString());
 		}
 		@Override
 		public void clear() {
 			
+		}
+		
+		public void print(int order, BufferedWriter output, String mes){
+			try {
+				output.write("Case #" + order + ":" + mes + "\n");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
