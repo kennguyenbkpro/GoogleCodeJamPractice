@@ -2,6 +2,7 @@ package ken.codejam;
 
 import java.io.BufferedWriter;
 
+import ken.codejam.utils.AlgorithmUtils;
 import ken.codejam.utils.AutoParseInputProblem;
 import ken.codejam.utils.AutoParseTestCase;
 
@@ -14,9 +15,7 @@ public class Snapper extends AutoParseInputProblem{
 	}
 
 	public static void main(String[] args) {
-//		new Snapper().start();
-		short A = 0x7FFF;
-		System.out.println(A);
+		new Snapper().start();
 	}
 	
 	public static class TestCase extends AutoParseTestCase {
@@ -28,7 +27,7 @@ public class Snapper extends AutoParseInputProblem{
 
 		@Override
 		public void process(int order, BufferedWriter output) {
-			long numOfBit = fastExponentiation(2, N);
+			long numOfBit = 1<<N;
 			if ((K + 1) % numOfBit == 0){
 				print(order, output, "ON");
 			} else {
@@ -36,16 +35,6 @@ public class Snapper extends AutoParseInputProblem{
 			}
 		}
 		
-		long fastExponentiation(int a, long n){
-			if (n == 0) return 1;
-			if (n % 2 == 0){
-				long result = fastExponentiation(a, n/2);
-				return result * result;
-			} else {
-				return a * fastExponentiation(a, n - 1);
-			}
-		}
-
 		@Override
 		public void clear() {
 			
