@@ -1,11 +1,13 @@
 package ken.codejam;
 
 import java.io.BufferedWriter;
+import java.math.BigInteger;
 
 import ken.codejam.BadHorse.TestCase;
 import ken.codejam.utils.AutoParseInputProblem;
 import ken.codejam.utils.AutoParseTestCase;
 import ken.codejam.utils.FirstLineNumOfTCProblem;
+import ken.codejam.utils.ParserUtils;
 
 /**
  * Problem
@@ -74,8 +76,7 @@ public class FairWarning extends FirstLineNumOfTCProblem{
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		new FairWarning().start();
 	}
 
 	@Override
@@ -85,9 +86,16 @@ public class FairWarning extends FirstLineNumOfTCProblem{
 	}
 	
 	public static class TestCase extends BaseTestCase {
+		int N;
+		BigInteger[] t;
 		
 		public void setValue(String line){
-			
+			String[] val = line.split(" ");
+			N = Integer.valueOf(val[0]);
+			t = new BigInteger[N];
+			for (int i = 0; i < N; i ++){
+				t[i] = new BigInteger(val[i + 1]);
+			}
 		}
 
 		@Override
@@ -101,5 +109,25 @@ public class FairWarning extends FirstLineNumOfTCProblem{
 		}
 		
 	}
+	
+//	public static class BigNumber {
+//		BigInteger
+//		public BigNumber(String data){
+//			this.data = data;
+//		}
+//		
+//		public static BigNumber valueOf(String data){
+//			return new BigNumber(data);
+//		}
+//		
+//		public BigNumber mod(BigNumber number){
+//			BigNumber bigNumber = null;
+//			
+//			
+//			
+//			return bigNumber;
+//		}
+//		
+//	}
 
 }
