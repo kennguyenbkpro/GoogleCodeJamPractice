@@ -2,6 +2,10 @@ package ken.codejam;
 
 import java.io.BufferedWriter;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 import ken.codejam.BadHorse.TestCase;
 import ken.codejam.utils.AutoParseInputProblem;
@@ -86,22 +90,40 @@ public class FairWarning extends FirstLineNumOfTCProblem{
 	}
 	
 	public static class TestCase extends BaseTestCase {
-		int N;
-		BigInteger[] t;
+		BigInteger t0;
+		ArrayList<BigInteger> dt;
 		
 		public void setValue(String line){
 			String[] val = line.split(" ");
-			N = Integer.valueOf(val[0]);
-			t = new BigInteger[N];
-			for (int i = 0; i < N; i ++){
-				t[i] = new BigInteger(val[i + 1]);
+			t0 = new BigInteger(val[1]);
+			
+			dt = new ArrayList<>();
+			for (int i = 0; i < val.length - 2; i ++){
+				BigInteger ti = new BigInteger(val[i + 2]);
+				if (!ti.equals(t0)){
+					dt.add(ti.subtract(t0).abs());
+				}
 			}
 		}
 
 		@Override
 		public void process(int order, BufferedWriter output) {
-			// TODO Auto-generated method stub
-			
+			if (dt.size() <= 1){
+				if (dt.size() == 0){
+					print(order, output, "" + 0);
+					return;
+				}
+				BigInteger T = dt.get(0);
+				BigInteger y = T.subtract(t0.mod(T)).mod(T);
+				print(order, output, y.toString());
+				return;
+			}
+			BigInteger T = dt.get(0);
+			for (int i = 1; i < dt.size(); i ++){
+				T = T.gcd(dt.get(i));
+			}
+			BigInteger result = T.subtract(t0.mod(T)).mod(T);
+			print(order, output, result.toString());
 		}
 
 		@Override
@@ -109,25 +131,4 @@ public class FairWarning extends FirstLineNumOfTCProblem{
 		}
 		
 	}
-	
-//	public static class BigNumber {
-//		BigInteger
-//		public BigNumber(String data){
-//			this.data = data;
-//		}
-//		
-//		public static BigNumber valueOf(String data){
-//			return new BigNumber(data);
-//		}
-//		
-//		public BigNumber mod(BigNumber number){
-//			BigNumber bigNumber = null;
-//			
-//			
-//			
-//			return bigNumber;
-//		}
-//		
-//	}
-
 }
