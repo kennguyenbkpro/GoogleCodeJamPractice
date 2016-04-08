@@ -2,9 +2,36 @@ package ken.codejam;
 
 import java.io.BufferedWriter;
 
+import ken.codejam.utils.AutoParseInputProblem;
+import ken.codejam.utils.AutoParseTestCase;
 import ken.codejam.utils.FirstLineNumOfTCProblem;
 
-public class Omino extends FirstLineNumOfTCProblem{
+/**
+ * https://code.google.com/codejam/contest/6224486/dashboard#s=p3
+ * 
+ * 
+ 
+Input 
+ 	
+Output 
+ 
+4
+2 2 2
+2 1 3
+4 4 1
+3 2 3
+
+Case #1: GABRIEL
+Case #2: RICHARD
+Case #3: RICHARD
+Case #4: GABRIEL
+
+
+
+ * @author Ken
+ *
+ */
+public class Omino extends AutoParseInputProblem{
 
 	public Omino() {
 		super(new TestCase());
@@ -13,20 +40,12 @@ public class Omino extends FirstLineNumOfTCProblem{
 	public static void main(String[] args) {
 		new Omino().start();
 	}
-
-	@Override
-	public boolean onReadTestCase(BaseTestCase testcase, String line) {
-		((TestCase) testcase).setValue(line);
-		return true;
-	}
 	
-	public static class TestCase extends BaseTestCase {
-		int X, R, C;
-		public void setValue(String line){
-			String[] val = line.split(" ");
-			X = Integer.valueOf(val[0]);
-			R = Integer.valueOf(val[1]);
-			C = Integer.valueOf(val[2]);
+	public static class TestCase extends AutoParseTestCase {
+		public Integer X, R, C;
+		
+		public TestCase(){
+			super("X R C");
 		}
 
 		@Override

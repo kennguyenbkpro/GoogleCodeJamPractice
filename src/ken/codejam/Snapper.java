@@ -6,6 +6,11 @@ import ken.codejam.utils.AlgorithmUtils;
 import ken.codejam.utils.AutoParseInputProblem;
 import ken.codejam.utils.AutoParseTestCase;
 
+/**
+ * https://code.google.com/codejam/contest/433101/dashboard#s=p0
+ * @author Ken
+ *
+ */
 public class Snapper extends AutoParseInputProblem{
 
 

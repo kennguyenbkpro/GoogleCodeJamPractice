@@ -10,7 +10,7 @@ import ken.codejam.utils.AutoParseTestCase;
 import ken.codejam.utils.FirstLineNumOfTCProblem;
 
 /**
- * Problem
+ * Problem https://code.google.com/codejam/contest/2974486/dashboard#s=p2
 
 Minesweeper is a computer game that became popular in the 1980s, and is still included in some versions of the Microsoft Windows operating system. This problem has a similar idea, but it does not assume you have played Minesweeper.
 

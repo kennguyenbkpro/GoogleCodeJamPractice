@@ -31,6 +31,7 @@ public class ParserUtils{
 		}
 		return chars;
 	}
+
 	
 	public static void convertLineStringByPattern(String pattern, String line, String splitter, Object obj) throws Exception{
 		String[] valPattern = pattern.split(splitter);

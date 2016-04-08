@@ -2,8 +2,8 @@ package ken.codejam;
 
 import java.io.BufferedWriter;
 
-import ken.codejam.utils.FileUtils;
-import ken.codejam.utils.FileUtils.OnReadFileListener;
+import ken.codejam.utils.AutoParseInputProblem;
+import ken.codejam.utils.AutoParseTestCase;
 
 
 /**
@@ -67,80 +67,51 @@ Case #3: 4 5
  * @author Ken
  *
  */
-public class StoreCredit {
-	public static class TestCase {
-		public int C = 0;
-		public int I = 0;
-		public int[] P = null;
-		public int order = 0;
+public class StoreCredit extends AutoParseInputProblem{
+	public StoreCredit() {
+		super(new TestCase());
+	}
+
+
+
+	public static class TestCase extends AutoParseTestCase{
 		
-		private void processTestCase(){
-			///////////////////////////////////////////////////////////////////
+		public TestCase(){
+			super("C\n"
+					+ "I\n"
+					+ "#P");
+		}
+		public Integer C;
+		public Integer I;
+		public Integer[] P;
+		
+		@Override
+		public void process(int order, BufferedWriter output) {
 			for (int i = 0; i < P.length; i ++){
 				if (P[i] < C){
 					for (int j = i + 1; j < P.length; j ++){
 						if (P[i] + P[j] == C){
-							System.out.println("Case #" + order + ": " + (i + 1) + " " + (j + 1));
+							print(order, output, (i + 1) + " " + (j + 1));
 							return;
 						}
 					}
 				}
 			}
 		}
+
+		@Override
+		public void clear() {
+			
+		}
 	}
 	
-	private static int N = 0;
-	
-	private static final int STATE_N = 1;
-	private static final int STATE_C = 2;
-	private static final int STATE_I = 3;
-	private static final int STATE_P = 4;
-	
-	private static int state = STATE_N;
 	
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		final TestCase testCase = new TestCase();
-		FileUtils.readFileByLine(new OnReadFileListener() {
-			
-			public void onReadLine(String line) {
-				switch (state) {
-				case STATE_N:
-					N = Integer.parseInt(line);
-					state = STATE_C;
-					break;
-				case STATE_C:
-					testCase.C = Integer.parseInt(line);
-					testCase.order ++;
-					state = STATE_I;
-					break;
-				case STATE_I:
-					testCase.I = Integer.parseInt(line);
-					testCase.P = new int[testCase.I];
-					state = STATE_P;
-					break;
-				case STATE_P:
-					String[] arrayString = line.split(" ");
-					for (int i = 0; i < testCase.I; i ++){
-						testCase.P[i] = Integer.parseInt(arrayString[i]);
-					}
-					testCase.processTestCase();
-					state = STATE_C;
-					break;
-				default:
-					break;
-				}
-			}
-
-			public void onReadLine(String line, BufferedWriter output) {
-				// TODO Auto-generated method stub
-				
-			}
-		}, "large.in");
-		state = STATE_N;
+		new StoreCredit().start();
 	}
 	
 

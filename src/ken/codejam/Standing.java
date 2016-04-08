@@ -2,21 +2,46 @@ package ken.codejam;
 
 import java.io.BufferedWriter;
 
-import ken.codejam.utils.FirstLineNumOfTCProblem;
+import ken.codejam.utils.AutoParseInputProblem;
+import ken.codejam.utils.AutoParseTestCase;
 
-public class Standing extends FirstLineNumOfTCProblem{
+/**
+ * https://code.google.com/codejam/contest/6224486/dashboard#s=p0
+ * 
+ * Input 
+ 	
+Output 
+ 
+4
+4 11111
+1 09
+5 110011
+0 1
+
+Case #1: 0
+Case #2: 1
+Case #3: 2
+Case #4: 0
+
+
+
+ * @author Ken
+ *
+ */
+public class Standing extends AutoParseInputProblem{
 
 	public Standing() {
 		super(new TestCase());
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		new Standing().start();
 	}
 	
-	public static class TestCase extends BaseTestCase {
+	public static class TestCase extends AutoParseTestCase {
+		public TestCase(){
+			super("@line");
+		}
 		public String line;
 
 		@Override
@@ -55,20 +80,5 @@ public class Standing extends FirstLineNumOfTCProblem{
 		
 	}
 
-	@Override
-	public boolean onReadTestCase(BaseTestCase testcase, String line) {
-		((TestCase) testcase).line = line;
-		return true;
-	}
-
-	@Override
-	protected String getInputFile() {
-		return "standing.in";
-	}
-
-	@Override
-	protected String getOutputFile() {
-		return "standing.out";
-	}
 
 }
