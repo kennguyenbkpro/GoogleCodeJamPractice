@@ -40,10 +40,13 @@ public abstract class AutoParseTestCase extends BaseTestCase{
 		} 
 		if (lineCountForArray > 0){
 			Field field = getClass().getField(varNameOfArray);
-			if (field.getType().getComponentType().getComponentType().equals(Character.class)){
+			Class array1DType = field.getType().getComponentType();
+			if (array1DType.getComponentType() != null && array1DType.getComponentType().equals(Character.class)){
 				Character[] chars = ParserUtils.convertStringToArrayChar(lineInput);
 				Array.set(field.get(this), arraySize - lineCountForArray, chars);
-			} if (field.getType().getComponentType().getComponentType().isAssignableFrom(Number.class)){
+			} else if (array1DType.equals(String.class)){
+				Array.set(field.get(this), arraySize - lineCountForArray, lineInput);
+			} else if (array1DType.getComponentType() != null && array1DType.getComponentType().isAssignableFrom(Number.class)){
 				Object obj = ParserUtils.convertStringToArrayNumber(lineInput, " ", field.getType().getComponentType().getComponentType());
 				Array.set(field.get(this), arraySize - lineCountForArray, obj);
 			} 
