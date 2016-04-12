@@ -47,13 +47,13 @@ public abstract class AutoParseTestCase extends BaseTestCase{
 				Array.set(field.get(this), arraySize - lineCountForArray, chars);
 			} else if (array1DType.equals(String.class)){//=======================================================================String[]
 				Array.set(field.get(this), arraySize - lineCountForArray, lineInput);
-			}  else if (array1DType.getComponentType() != null && array1DType.getComponentType().equals(String.class)){//============String[][]
-				Object obj = lineInput.split(" ");
-				Array.set(field.get(this), arraySize - lineCountForArray, obj);
-			} else if (array1DType.getComponentType() != null ){//Number[][]
+			} else if (array1DType.getComponentType() != null && array1DType.getComponentType().isAssignableFrom(Number.class)){//Number[][]
 				Object obj = ParserUtils.convertStringToArrayNumber(lineInput, " ", field.getType().getComponentType().getComponentType());
 				Array.set(field.get(this), arraySize - lineCountForArray, obj);
-			}
+			} else if (array1DType.getComponentType() != null && array1DType.getComponentType().equals(String.class)){//============String[][]
+				Object obj = lineInput.split(" ");
+				Array.set(field.get(this), arraySize - lineCountForArray, obj);
+			} 
 			
 			lineCountForArray --;
 		} else {
