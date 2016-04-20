@@ -39,7 +39,11 @@ public class ParserUtils{
 		for (int j = 0; j < valPattern.length; j++){
 			Field field = obj.getClass().getField(valPattern[j]);
 			Method valueOfMethof = field.getType().getMethod("valueOf", String.class);
-			field.set(obj, valueOfMethof.invoke(field.getType(), valInput[j]));
+			if (valPattern[j].equals("NL")){
+				field.set(obj, ((Integer) valueOfMethof.invoke(field.getType(), valInput[j])) * 2 - 1);
+			} else {
+				field.set(obj, valueOfMethof.invoke(field.getType(), valInput[j]));
+			}
 		}
 	}
 }
