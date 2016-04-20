@@ -28,24 +28,18 @@ public class Counter extends AutoParseInputProblem{
 			long count = 0;
 			long n = N;
 			while (n > 20){
-				String s = "", lS = "";
+				String s = "";
 				String NS = "" + n;
-				int lst = Integer.valueOf(NS.charAt(NS.length()-1) + "");
-				if (lst == 0){//xxxxx0
+				if (NS.charAt(NS.length()-1) == '0'){//xxxxx0
 					count ++;
 					n--;
 				} else {
 					long ra = AlgorithmUtils.fastExponentiation(10, NS.length()/2);
-					long left = n /ra; lS = left + "";
+					long left = n /ra; 
 					long right = n % ra; 
 					if (right == 1){//xxxx0001
-						s += "1";
-						for (int i = 1; i < NS.length()/2; i ++){
-							s += "0";
-						}
-						for (int i = lS.length() - 1; i >= 0; i --){
-							s += lS.charAt(i);
-						}
+						s += (ra/10);
+						s += new StringBuffer().append(left).reverse().toString();
 						long next = Long.valueOf(s);
 						if (n == next){//1000x0001
 							next = AlgorithmUtils.fastExponentiation(10, NS.length()-1) - 1;
@@ -56,11 +50,9 @@ public class Counter extends AutoParseInputProblem{
 						n = next;
 					} else {
 						count += right - 1;
-						s = lS;
-						for (int i = 0; i < NS.length()/2 - 1; i ++){
-							s += "0";
-						}
-						s += 1;
+						s += left;
+						s += AlgorithmUtils.generateString(NS.length()/2 - 1, '0');
+						s += '1';
 						n = Long.valueOf(s);
 					}
 					

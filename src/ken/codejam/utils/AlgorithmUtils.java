@@ -10,4 +10,12 @@ public class AlgorithmUtils {
 			return a * fastExponentiation(a, n - 1);
 		}
 	}
+	
+	public static String generateString(int length, char c){
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < length; i ++){
+			builder.append(c);
+		}
+		return builder.toString();
+	}
 }
