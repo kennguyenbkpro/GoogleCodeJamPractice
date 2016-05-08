@@ -36,9 +36,10 @@ public abstract class ReadWriteProblem implements OnWriteFileListener, OnReadFil
 	protected abstract String getOutputFile();
 	
 	public void start(){
+		long t = System.currentTimeMillis();
 		System.out.println("Start " + getOutputFile());
 		FileUtils.writeLineToFile(getOutputFile(), this);
-		System.out.println("Done!");
+		System.out.println("Done! " + (System.currentTimeMillis() - t));
 	}
 	
 	public void onReadLine(String line){}
